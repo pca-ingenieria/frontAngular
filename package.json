@@ -4,10 +4,10 @@
     "autor": "Roosevelt Diaz",
     "email": "rdt-2012@hotmail.com",
     "scripts": {
+        "postinstall": "ng build --prod",
         "ng": "ng",
-        "start": "ng serve",
+        "start": "node server.js",
         "build": "ng build --prod",
-        "gitbuild": "ng build --prod --base-href /start-angular/SB-Admin-BS4-Angular-7/master/dist/",
         "test": "ng test",
         "test-ci": "TEST_CI=true ng test",
         "lint": "ng lint",
@@ -15,9 +15,12 @@
     },
     "private": true,
     "dependencies": {
+        "@angular-devkit/build-angular": "~0.800.0",
         "@angular/animations": "8.0.0",
+        "@angular/cli": "8.0.2",
         "@angular/common": "8.0.0",
         "@angular/compiler": "8.0.0",
+        "@angular/compiler-cli": "8.0.0",
         "@angular/core": "8.0.0",
         "@angular/forms": "8.0.0",
         "@angular/platform-browser": "8.0.0",
@@ -31,11 +34,14 @@
         "core-js": "2.5.7",
         "datatables.net": "^1.10.19",
         "datatables.net-dt": "^1.10.19",
+        "express": "^4.17.1",
         "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
+        "path": "^0.12.7",
         "rxjs": "6.5.2",
         "sweetalert2": "^7.15.1",
         "tslib": "^1.9.0",
+        "typescript": "3.4.5",
         "yarn": "1.16.0",
         "zone.js": "~0.9.1"
     },
@@ -62,5 +68,9 @@
         "ts-node": "7.0.1",
         "tslint": "5.11.0",
         "typescript": "3.4.5"
+    },
+    "engines": {
+        "node": "11.10.0",
+        "npm": "6.7.0"
     }
 }
