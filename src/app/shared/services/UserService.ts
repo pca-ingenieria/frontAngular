@@ -21,6 +21,11 @@ export class UserService {
     return this.http.get(ruta, this.options.headers)
   }
 
+  getUsersAutomatic(): Observable<any> {
+    let ruta = this.routeBaseApi + 'getusersautomatic';
+    return this.http.get(ruta, this.options.headers)
+  }
+  
   saveUser(data): Observable<any> {
     let ruta = this.routeBaseApi + 'saveuser';
     return this.http.post(ruta, JSON.stringify(data), this.options.headers)

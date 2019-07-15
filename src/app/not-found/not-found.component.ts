@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
+  imagePath= "assets/images/hommer-404.jpg";
   constructor() { }
 
   ngOnInit() {

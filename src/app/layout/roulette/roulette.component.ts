@@ -30,21 +30,42 @@ export class RouletteComponent implements OnInit {
     divOne = false;
     divTwo = false;
     divThree = false;
+    timeNexSpinMinutes = 3;
+    timeNexSpinSeconds: any = '00';
+    interval;
+    timeLeft = 0;
+    colors = [
+        {},
+        {
+            value: 'green'
+        },
+        {
+            value: 'red'
+        },
+        {
+            value: 'black'
+        }
+    ];
 
-    colors = [{}, {
-        value: "green"
-    }, {
-        value: "red"
-    }, {
-        value: "black"
-    }];
+    constructor(private userService: UserService) {
+           this.automaticInitial();
+    }
 
-    constructor(private userService: UserService) { }
+    automaticInitial() {
+        this.userService.getUsersAutomatic().subscribe(
+            res => {
+                this.data = res;
+                this.spin();
+            },
+            error => {
+                console.log('error', error);
+            }
+        );
+    }
 
     onChange(color, index) {
         this.data[index].color = this.colors[color].value;
     }
-
 
     delay(flag) {
         switch (flag) {
@@ -72,12 +93,14 @@ export class RouletteComponent implements OnInit {
     }
 
     spin() {
-        this.doAsyncTask().then(
-            (success) => {
-                console.log(success)
-                this.executeBet(success)
-            }
-        );
+        for (let index = 0; index < this.data.length; index++) {
+            this.data[index].bet = Math.floor(Math.random() * (4 - 1)) + 1;
+        }
+        console.log(this.data);
+        this.doAsyncTask().then(success => {
+            console.log(success);
+            this.executeBet(success);
+        });
     }
 
     executeBet(bet) {
@@ -85,7 +108,8 @@ export class RouletteComponent implements OnInit {
             res => {
                 swal({
                     title: 'Exíto',
-                    text: 'Se gano'
+                    text: 'Se giro con exito la ruleta',
+                    timer: 3000
                 })
                     .then(willDelete => {
                         this.getData();
@@ -101,32 +125,32 @@ export class RouletteComponent implements OnInit {
                     console.log(element);
                     if(this.data[index].bet == bet){
                         if(bet == 1){
-                            this.data[index].amount = this.data[index].betAvailable * 20; 
+                            this.data[index].amount = this.data[index].betAvailable * 20;
                         }else{
                             this.data[index].amount = this.data[index].betAvailable * 2;
                         }
                     }else{
-                        this.data[index].amount -= this.data[index].betAvailable;  
+                        this.data[index].amount -= this.data[index].betAvailable;
                     }
-                  
+
                 } */
     }
 
     changeBet(flag, item, index) {
-        let amount = this.data[index].amount;
-        let betAvailable = this.data[index].betAvailable;
+        const amount = this.data[index].amount;
+        const betAvailable = this.data[index].betAvailable;
         switch (flag) {
             case 1:
-                console.log(betAvailable, amount)
+                console.log(betAvailable, amount);
                 this.data[index].flagMore = false;
-                if ((amount * 0.1) >= (parseInt(betAvailable) - 1)) {
+                if (amount * 0.1 >= parseInt(betAvailable) - 1) {
                     this.data[index].flagLess = true;
                     this.data[index].betAvailable = amount * 0.1;
                 } else {
                     this.data[index].betAvailable--;
                 }
 
-                /*        
+                /*
                        if ((amount * 0.1) <= (betAvailable + 1)) {
                            this.data[index].flagLess = true;
                            this.data[index].betAvailable = amount * 0.1;
@@ -134,9 +158,8 @@ export class RouletteComponent implements OnInit {
                        this.data[index].betAvailable--; */
                 break;
             case 2:
-
                 this.data[index].flagLess = false;
-                if ((amount * 0.15) <= (parseInt(betAvailable) + 1)) {
+                if (amount * 0.15 <= parseInt(betAvailable) + 1) {
                     this.data[index].flagMore = true;
                     this.data[index].betAvailable = amount * 0.15;
                 } else {
@@ -157,10 +180,9 @@ export class RouletteComponent implements OnInit {
                () => console.log("Task Complete!"),
                () => console.log("Task Errored!"),
            ); */
-        var promise = new Promise((resolve, reject) => {
-
+        const promise = new Promise((resolve, reject) => {
             let ciclo;
-            let random = this.getRandomInt();
+            const random = this.getRandomInt();
             if (random <= 49) {
                 ciclo = 3;
             }
@@ -176,7 +198,7 @@ export class RouletteComponent implements OnInit {
             this.divOne = true;
             let count = 2;
 
-            for (var i = 1; i <= 10; i++) {
+            for (let i = 1; i <= 10; i++) {
                 setTimeout(() => {
                     this.delay(count);
                     if (count >= 3) {
@@ -188,7 +210,7 @@ export class RouletteComponent implements OnInit {
             }
 
             setTimeout(() => {
-                for (var i = 1; i <= 10; i++) {
+                for (let i = 1; i <= 10; i++) {
                     setTimeout(() => {
                         this.delay(count);
                         if (count >= 3) {
@@ -201,7 +223,7 @@ export class RouletteComponent implements OnInit {
             }, 3000);
 
             setTimeout(() => {
-                for (var i = 1; i <= (ciclo + 6); i++) {
+                for (let i = 1; i <= ciclo + 6; i++) {
                     setTimeout(() => {
                         this.delay(count);
                         if (count >= 3) {
@@ -209,25 +231,22 @@ export class RouletteComponent implements OnInit {
                         } else {
                             count++;
                         }
-
                     }, i * 300);
                 }
             }, 4000);
 
-
-            //OPCIONAL
+            // OPCIONAL
             setTimeout(() => {
                 resolve(ciclo);
             }, 7000);
-
         });
         return promise;
     }
 
     timeout(ciclos, time) {
         let count = 2;
-        var promise = new Promise((resolve, reject) => {
-            for (var i = 1; i <= ciclos; i++) {
+        const promise = new Promise((resolve, reject) => {
+            for (let i = 1; i <= ciclos; i++) {
                 setTimeout(() => {
                     this.delay(count);
                     if (count >= 3) {
@@ -235,9 +254,6 @@ export class RouletteComponent implements OnInit {
                     } else {
                         count++;
                     }
-
-
-
                 }, i * time);
             }
             resolve();
@@ -246,22 +262,60 @@ export class RouletteComponent implements OnInit {
     }
 
     getRandomInt() {
-        return Math.floor(Math.random() * (100 - 1)) + 1;
+        return Math.floor(Math.random() * (101 - 1)) + 1;
     }
 
     ngOnInit() {
-        this.getData();
+        //  this.getData();
+    }
+
+    nextSpin() {
+        /*    setTimeout(() => {
+
+        }, 18000); */
+    }
+
+    startTimer() {
+        this.interval = setInterval(() => {
+            if (this.timeLeft <= 180) {
+                if (this.timeNexSpinMinutes === 3) {
+                    this.timeNexSpinSeconds = 59;
+                    this.timeNexSpinMinutes = 2;
+                }
+                if (this.timeNexSpinSeconds === 0) {
+
+                    if (this.timeNexSpinMinutes === 0) {
+                        this.automaticInitial();
+                        this.timeNexSpinSeconds = '00';
+                        this.timeNexSpinMinutes = 3;
+                        clearInterval(this.interval);
+                    } else {
+                    this.timeNexSpinSeconds = 59;
+                    this.timeNexSpinMinutes--;
+                    }
+                } else {
+                    this.timeNexSpinSeconds--;
+                }
+                this.timeLeft--;
+            } else {
+                this.timeLeft = 0;
+            }
+        }, 1000);
+    }
+
+    pauseTimer() {
+        clearInterval(this.interval);
     }
 
     getData() {
-        this.userService.getUsers().subscribe(
+        this.userService.getUsersAutomatic().subscribe(
             res => {
                 this.data = res;
+                this.startTimer();
             },
             error => {
                 console.log('error', error);
             }
         );
     }
-
 }

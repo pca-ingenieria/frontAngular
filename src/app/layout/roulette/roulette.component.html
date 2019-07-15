@@ -11,6 +11,11 @@
             </ol>
         </div>
     </div>
+    <div class="row" style="margin: 1%">
+        <div class="col-xl-12 text-center">
+            <h3>Siguiente ronda {{timeNexSpinMinutes}} minutos con {{timeNexSpinSeconds}} segundos.  </h3>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl-9">
             <div class="card-header">Usuarios</div>
@@ -28,9 +33,8 @@
                         <td>{{item.name + " " + item.lastName}}</td>
                         <td>${{item.amount}}</td>
                         <td>
-                            <select [(ngModel)]="item.bet" style="color: white" (change)="onChange($event.target.value, idx)" [ngStyle]="{'background-color':item.color}" class="form-control ">
-                                <option class="" value="-1">Seleccione un color</option>
-                                <option class="green" value="1">2%</option>
+                            <select [(ngModel)]="item.bet" [ngClass]="{'green': item.bet=='1', 'red': item.bet=='2', 'black': item.bet=='3' }"  (change)="onChange($event.target.value, idx)" [ngStyle]="{'background-color':item.color}" class="form-control ">
+                                <option class="green"  value="1">2%</option>
                                 <option class="red" value="2">49%</option>
                                 <option class="black" value="3">49%</option>
                             </select>
@@ -70,9 +74,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="width: 100%">
-                <button (click)="spin()">girar</button>
-            </div>
+      <!--       <div class="row" style="width: 100%">
+                <button (click)="startTimer()">girar</button>
+            </div> -->
         </div>
     </div>
 </div>
