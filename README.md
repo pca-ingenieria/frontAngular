@@ -24,6 +24,6 @@ Se levanta el sistema en la siguiente dirección "localhost:4200"
 	
 ### Para compilar el proyecto se ejecuta
 
-Se genera una carpeta "dist" con rl sistema compilado
+Se genera una carpeta "dist" con el sistema compilado
 
 	ng build
