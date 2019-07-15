@@ -1,0 +1,45 @@
+<div>
+    <div class="row">
+        <div class="col-xl-12">
+            <h2 class="page-header">
+                Usuarios
+            </h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <i class="fa fa-dashboard"></i> <a href="Javascript:void(0)" [routerLink]="['/user']">Usuarios</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <button routerLink="/user/create">Crear usuario</button>
+    <table datatable class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cantidad de dinero</th>
+                <th>Telefono</th>
+                <th>Correo electronico</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of data">
+                <td>{{item.name}}</td>
+                <td>{{item.lastName}}</td>
+                <td>${{item.amount}}</td>
+                <td>{{item.telephone}}</td>
+                <td>{{item.email}}</td>
+                <td>
+                    <button routerLink="/user/edit/{{item.id}}">
+                        Editar
+                    </button>
+                    <button (click)="deleteUser(item.id)">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

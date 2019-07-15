@@ -1,0 +1,78 @@
+<div>
+    <div class="row">
+        <div class="col-xl-12">
+            <h2 class="page-header">
+                Ruleta
+            </h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <i class="fa fa-dashboard"></i> <a href="Javascript:void(0)" [routerLink]="['/user']">Usuarios</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-9">
+            <div class="card-header">Usuarios</div>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre completo</th>
+                        <th>Cantidad de dinero</th>
+                        <th>Selección</th>
+                        <th>Apuesta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of data; index as idx">
+                        <td>{{item.name + " " + item.lastName}}</td>
+                        <td>${{item.amount}}</td>
+                        <td>
+                            <select [(ngModel)]="item.bet" style="color: white" (change)="onChange($event.target.value, idx)" [ngStyle]="{'background-color':item.color}" class="form-control ">
+                                <option class="" value="-1">Seleccione un color</option>
+                                <option class="green" value="1">2%</option>
+                                <option class="red" value="2">49%</option>
+                                <option class="black" value="3">49%</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="form-group input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" (click)="changeBet(1, item, idx)" [disabled]="item.flagLess" type="button"><i
+                                            class="fa fa-caret-down"></i></button>
+                                </div>
+                                <input type="text" class="form-control" [(ngModel)]="item.betAvailable">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" (click)="changeBet(2, item, idx)" [disabled]="item.flagMore" type="button"><i
+                                            class="fa fa-caret-up"></i></button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xl-3">
+            <div class="row" style="width: 100%">
+                <div class="col-xl-12" [ngClass]="divOne ? 'module-border-wrap' : 'module-border-none'">
+                    <div class="module green">
+                        2%
+                    </div>
+                </div>
+                <div class="col-xl-6" [ngClass]="divTwo ? 'module-border-wrap' : 'module-border-none'">
+                    <div class="module red">
+                        49%
+                    </div>
+                </div>
+                <div class="col-xl-6" [ngClass]="divThree ? 'module-border-wrap' : 'module-border-none'">
+                    <div class="module black">
+                        49%
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="width: 100%">
+                <button (click)="spin()">girar</button>
+            </div>
+        </div>
+    </div>
+</div>

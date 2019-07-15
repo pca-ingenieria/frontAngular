@@ -1,0 +1,31 @@
+.green {
+    background-color: green;
+    color: white !important;
+}
+
+.red {
+    background-color: red;
+    color: white !important;
+}
+
+.black {
+    background-color: black;
+    color: white !important;
+}
+
+.module-border-wrap {
+    position: relative;
+    background: linear-gradient(to right, #ECFF33, #33F9FF);
+    opacity: 1;
+    padding: 5px;
+}
+
+.module-border-none {
+    position: relative;
+    opacity: 0.3;
+    padding: 5px;
+}
+
+.module {
+    padding: 2rem;
+}
