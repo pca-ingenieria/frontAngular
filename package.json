@@ -11,7 +11,8 @@
         "test": "ng test",
         "test-ci": "TEST_CI=true ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript"
     },
     "private": true,
     "dependencies": {
